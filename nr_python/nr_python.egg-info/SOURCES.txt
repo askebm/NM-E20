@@ -1,0 +1,7 @@
+setup.py
+nr_python/__init__.py
+nr_python.egg-info/PKG-INFO
+nr_python.egg-info/SOURCES.txt
+nr_python.egg-info/dependency_links.txt
+nr_python.egg-info/not-zip-safe
+nr_python.egg-info/top_level.txt
