@@ -3,30 +3,35 @@ import scipy as sc
 import scipy.linalg as scl
 import sympy as sp
 import pandas as pd
+import matplotlib.pyplot as plt
 
+
+
+def pprint(num):
+    print("%10.3e" % num)
 
 ## GramSmith
-def GramSmith(x,thresh=0.001):
-    rows,cols = x.shape
-    e = x.copy();
-    e[:,0] = x[:,0]/np.linalg.norm(x[:,0])
+def GramSmith(_x,thresh=0.001):
+    rows,cols = _x.shape
+    _e = _x.copy()
+    _e[:,0] = _x[:,0]/np.linalg.norm(_x[:,0])
     for i in range(1,cols):
-        e[:,i] = x[:,i]
+        _e[:,i] = _x[:,i]
         for j in range(0,i):
-            e[:,i] -= (x[:,i].transpose()*(e[:,j]))[0,0]*e[:,j]
-        l = np.linalg.norm(e[:,i])
+            _e[:,i] -= np.dot(_x[:,i],_e[:,j])*_e[:,j]
+        l = np.linalg.norm(_e[:,i])
         if (thresh < l):
-            e[:,i] /= np.linalg.norm(e[:,i])
+            _e[:,i] /= l
         else:
-            e[:,i] = np.zeros(e[:,i].shape,dtype=e.dtype)
-    return e
+            _e[:,i] = np.zeros(_e[:,i].shape,dtype=_e.dtype)
+    return _e
 
-def bLS(b,u):
-    rows,cols = u.shape
-    result = zeros(b.shape,dtype=float)
+def bLS(_b,_u):
+    rows,cols = _u.shape
+    _result = np.zeros(_b.shape,dtype=np.double)
     for k in range(0,cols):
-        result += (b.transpose()*u[:,k])[0,0]*u[:,k]
-    return result
+        _result += np.dot(_b,_u[:,k])*_u[:,k]
+    return _result
 
 def _dk(x):
     result = np.zeros(x.size)
